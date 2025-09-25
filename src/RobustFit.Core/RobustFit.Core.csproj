@@ -1,0 +1,31 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net8.0</TargetFramework>
+
+    <!-- Build/pack settings -->
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <Deterministic>true</Deterministic>
+
+    <!-- NuGet package metadata (PackageVersion set in CI) -->
+    <PackageId>RobustFit.Core</PackageId>
+    <Authors>Tomasz Janus</Authors>
+    <Company>University of Manchester</Company>
+    <Description>Robust linear regression and loss functions (RobustFit).</Description>
+    <PackageTags>robust regression statistics</PackageTags>
+    <RepositoryUrl>https://github.com/tomjanus/RobustFit</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <PackageProjectUrl>https://github.com/tomjanus/RobustFit</PackageProjectUrl>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+
+    <!-- dotnet pack called in CI; do not auto-publish on local build -->
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="README.md" Pack="true" PackagePath="\" />
+    <None Include="LICENSE" Pack="true" PackagePath="\" />
+    <None Include="icon\icon.png" Pack="true" PackagePath="\"/>
+  </ItemGroup>
+
+</Project>
+
