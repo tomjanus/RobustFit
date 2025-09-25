@@ -6,6 +6,14 @@
 
 RobustFit is a .NET library for **ordinary least squares (OLS)** and **robust regression** analysis, designed to handle datasets that contain outliers and noise. It implements iteratively reweighted least squares (IRLS) methods with various robust loss functions, allowing for more reliable statistical modeling in real-world scenarios.
 
+```
+ ____            _                     _     _____   _   _   
+|  _ \    ___   | |__    _   _   ___  | |_  |  ___| (_) | |_ 
+| |_) |  / _ \  | '_ \  | | | | / __| | __| | |_    | | | __|
+|  _ <  | (_) | | |_) | | |_| | \__ \ | |_  |  _|   | | | |_ 
+|_| \_\  \___/  |_.__/   \__,_| |___/  \__| |_|     |_|  \__|
+```
+
 <div align="center">
   <img src="src/RobustFit.Core/icon/icon.png" alt="RobustFit Logo" width="200">
 </div>
@@ -159,19 +167,19 @@ See the [Demo Documentation](samples/README.md) for more details.
 using RobustFit.Core.Models;
 
 // Prepare data
-double[][] X = {
-    new double[] { 1.0, 2.0 },
-    new double[] { 2.0, 3.0 },
-    new double[] { 3.0, 4.0 }
-};
-double[] y = { 5.0, 7.0, 9.0 };
+double[][] X = [
+    [ 1.0, 2.0 ],
+    [ 2.0, 3.0 ],
+    [ 3.0, 4.0 ]
+];
+double[] y = [5.0, 7.0, 9.0];
 
 // Create and fit model
 var ols = new OLSRegressor();
 ols.Fit(X, y);
 
 // Make predictions
-double prediction = ols.Predict(new double[] { 4.0, 5.0 });
+double prediction = ols.Predict([4.0, 5.0 ]);
 Console.WriteLine($"OLS prediction: {prediction}");
 
 // Access coefficients
@@ -187,14 +195,14 @@ using RobustFit.Core.Models;
 using RobustFit.Core.LossFunctions;
 
 // Create data with outliers
-double[][] X = {
-    new double[] { 1.0 },
-    new double[] { 2.0 },
-    new double[] { 3.0 },
-    new double[] { 4.0 },
-    new double[] { 5.0 } // This will be an outlier point
-};
-double[] y = { 2.0, 4.0, 6.0, 8.0, 100.0 }; // Last point is outlier
+double[][] X = [
+    [1.0],
+    [2.0],
+    [3.0],
+    [4.0],
+    [5.0] // This will be an outlier point
+];
+double[] y = [2.0, 4.0, 6.0, 8.0, 100.0]; // Last point is outlier
 
 // Create loss function
 var huberLoss = new HuberLoss(c: 1.345);
@@ -204,7 +212,7 @@ var robust = new RobustRegressor();
 robust.Fit(X, y, huberLoss, maxIter: 100, tol: 1e-8);
 
 // Make prediction
-double prediction = robust.Predict(new double[] { 6.0 });
+double prediction = robust.Predict([6.0]);
 Console.WriteLine($"Robust prediction: {prediction}");
 ```
 
@@ -212,7 +220,6 @@ For more usage examples and API details, see the [Core Library Documentation](sr
 
 ## Documentation
 
-- [API Documentation](https://github.com/tomjanus/RobustFit/wiki)
 - [Core Library Details](src/README.md)
 - [Demo Application Guide](samples/README.md)
 - [Testing Information](tests/README.md)
