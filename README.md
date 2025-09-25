@@ -121,7 +121,7 @@ dotnet build src/RobustFit.Core
 dotnet pack -c Release -o ../../artifacts
 ```
 
-Alternatively, use the provided build script:
+Alternatively, use the provided build script (for Linux Only):
 
 ```bash
 ./build.sh
