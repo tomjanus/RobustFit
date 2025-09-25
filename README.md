@@ -4,7 +4,7 @@
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 [![Build Status](https://img.shields.io/badge/build-passing-brightgreen)]()
 
-RobustFit is a .NET library for **ordinary least squares (OLS)** and **robust regression** analysis, designed to handle datasets that contain outliers and noise. It implements iteratively reweighted least squares (IRLS) methods with various robust loss functions, allowing for more reliable statistical modeling in real-world scenarios.
+RobustFit is a .NET library for **ordinary least squares (OLS)** and **robust regression** analysis, designed to handle datasets that contain outliers and noise. It implements iteratively reweighted least squares (IRLS) methods with various robust loss functions.
 
 ```
  ____            _                     _     _____   _   _   

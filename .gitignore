@@ -74,6 +74,9 @@ project.lock.json
 project.fragment.lock.json
 artifacts/
 
+# Test Coverage Reports
+coveragereport/
+
 # ASP.NET Scaffolding
 ScaffoldingReadMe.txt
 
@@ -416,3 +419,8 @@ FodyWeavers.xsd
 *.msix
 *.msm
 *.msp
+
+.fake
+
+.ipynb_checkpoints/
+

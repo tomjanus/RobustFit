@@ -10,12 +10,15 @@
     <PackageId>RobustFit.Core</PackageId>
     <Authors>Tomasz Janus</Authors>
     <Company>University of Manchester</Company>
-    <Description>Robust linear regression and loss functions (RobustFit).</Description>
-    <PackageTags>robust regression statistics</PackageTags>
+    <Description>A lightweight .NET library for robust regression analysis, designed to provide reliable estimates in the presence of outliers and anomalies in datasets.</Description>
+    <PackageTags>robust-regression;statistics;outliers;linear-regression;regression;data-science;modeling;machine-learning</PackageTags>
     <RepositoryUrl>https://github.com/tomjanus/RobustFit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
     <PackageProjectUrl>https://github.com/tomjanus/RobustFit</PackageProjectUrl>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageIcon>icon.png</PackageIcon>
+    <PackageIconUrl>https://raw.githubusercontent.com/tomjanus/RobustFit/main/src/RobustFit.Core/icon/icon.png</PackageIconUrl>
 
     <!-- dotnet pack called in CI; do not auto-publish on local build -->
     <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
