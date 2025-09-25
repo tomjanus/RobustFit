@@ -13,13 +13,13 @@ namespace RobustFit.UnitTests
         public void OLS_SimpleLinearRegression_CorrectCoefficients()
         {
             // Arrange: y = 2 + 3*x
-            double[][] X = {
-                new double[] { 1.0 },
-                new double[] { 2.0 },
-                new double[] { 3.0 },
-                new double[] { 4.0 }
-            };
-            double[] y = { 5.0, 8.0, 11.0, 14.0 }; // 2 + 3*x
+            double[][] X = [
+                [1.0],
+                [2.0],
+                [3.0],
+                [4.0]
+            ];
+            double[] y = [5.0, 8.0, 11.0, 14.0]; // 2 + 3*x
 
             // Act
             var ols = new OLSRegressor();
@@ -35,15 +35,15 @@ namespace RobustFit.UnitTests
         public void OLS_MultipleRegression_CorrectCoefficients()
         {
             // Arrange: y = 1 + 2*x1 + 3*x2
-            double[][] X = {
-                new double[] { 1.0, 1.0 },
-                new double[] { 2.0, 1.0 },
-                new double[] { 1.0, 2.0 },
-                new double[] { 2.0, 2.0 },
-                new double[] { 3.0, 1.0 },
-                new double[] { 1.0, 3.0 }
-            };
-            double[] y = { 6.0, 9.0, 10.0, 13.0, 12.0, 13.0 }; // 1 + 2*x1 + 3*x2
+            double[][] X = [
+                [1.0, 1.0],
+                [2.0, 1.0],
+                [1.0, 2.0],
+                [2.0, 2.0],
+                [3.0, 1.0],
+                [1.0, 3.0]
+            ];
+            double[] y = [6.0, 9.0, 10.0, 13.0, 12.0, 13.0]; // 1 + 2*x1 + 3*x2
 
             // Act
             var ols = new OLSRegressor();
@@ -60,18 +60,18 @@ namespace RobustFit.UnitTests
         public void OLS_PredictSingle_CorrectPrediction()
         {
             // Arrange
-            double[][] X = {
-                new double[] { 1.0 },
-                new double[] { 2.0 },
-                new double[] { 3.0 }
-            };
-            double[] y = { 3.0, 5.0, 7.0 }; // y = 1 + 2*x
+            double[][] X = [
+                [1.0],
+                [2.0],
+                [3.0]
+            ];
+            double[] y = [3.0, 5.0, 7.0]; // y = 1 + 2*x
 
             var ols = new OLSRegressor();
             ols.Fit(X, y);
 
             // Act
-            double prediction = ols.Predict(new double[] { 4.0 });
+            double prediction = ols.Predict([4.0]);
 
             // Assert
             Assert.AreEqual(9.0, prediction, TOLERANCE, "Prediction for x=4 should be 9.0");
@@ -81,20 +81,20 @@ namespace RobustFit.UnitTests
         public void OLS_PredictBatch_CorrectPredictions()
         {
             // Arrange
-            double[][] X = {
-                new double[] { 1.0 },
-                new double[] { 2.0 }
-            };
-            double[] y = { 3.0, 5.0 }; // y = 1 + 2*x
+            double[][] X = [
+                [1.0],
+                [2.0]
+            ];
+            double[] y = [3.0, 5.0]; // y = 1 + 2*x
 
             var ols = new OLSRegressor();
             ols.Fit(X, y);
 
-            double[][] testX = {
-                new double[] { 3.0 },
-                new double[] { 4.0 },
-                new double[] { 5.0 }
-            };
+            double[][] testX = [
+                [3.0],
+                [4.0],
+                [5.0]
+            ];
 
             // Act
             double[] predictions = ols.Predict(testX);
@@ -122,11 +122,11 @@ namespace RobustFit.UnitTests
         public void OLS_MismatchedDimensions_ThrowsException()
         {
             // Arrange
-            double[][] X = {
-                new double[] { 1.0 },
-                new double[] { 2.0 }
-            };
-            double[] y = { 3.0 }; // Wrong size
+            double[][] X = [
+                [1.0],
+                [2.0]
+            ];
+            double[] y = [3.0]; // Wrong size
 
             var ols = new OLSRegressor();
 
