@@ -15,7 +15,8 @@ namespace RobustFit.Core.Models
         }
 
         public void Fit(double[][] X, double[] y, ILossFunction loss,
-                        int maxIter = 50, double tol = 1e-6)
+                        double alpha=0.0, int maxIter = 50, double tol = 1e-6,
+                        string initialEstimate = "ols")
         {
             if (X == null) throw new ArgumentNullException(nameof(X));
             if (y == null) throw new ArgumentNullException(nameof(y));
@@ -25,13 +26,33 @@ namespace RobustFit.Core.Models
             int n = y.Length;
             var XA = FitIntercept ? LinearAlgebra.AddIntercept(X) : X;
 
-            // Initial OLS
-            double[] beta = LinearAlgebra.OLS(XA, y);
-
+            // Initial residuals and beta
+            double[] beta;
+            if (initialEstimate.Equals("ols", StringComparison.CurrentCultureIgnoreCase))
+            {
+                beta = LinearAlgebra.OLS(XA, y);
+            }
+            else if (initialEstimate.Equals("median", StringComparison.CurrentCultureIgnoreCase))
+            {
+                int p = X[0].Length + (FitIntercept ? 1 : 0);
+                beta = new double[p];  // Initialize with zeros
+                beta[0] = LinearAlgebra.Median(y);
+            }
+            else
+            {
+                int p = X[0].Length + (FitIntercept ? 1 : 0);
+                beta = new double[p];  // Initialize all with zeros                
+            }
+            ;
+            
+            // Iteratively Reweighted Least Squares (IRLS)
             for (int iter = 0; iter < maxIter; iter++)
             {
-                double[] residuals = LinearAlgebra.Residuals(XA, y, beta);
-                double scale = LinearAlgebra.MAD(residuals);
+                double[] residuals = new double[n];
+                for (int i = 0; i < n; i++)
+                    residuals[i] = y[i] - LinearAlgebra.DotProduct(XA[i], beta);
+
+                double scale = LinearAlgebra.MAD(residuals) * 1.4826; // Consistency factor for normal distribution
 
                 // Compute weights
                 double[] w = new double[n];
@@ -39,7 +60,11 @@ namespace RobustFit.Core.Models
                     w[i] = loss.Weight(residuals[i] / scale);
 
                 // Weighted least squares
-                double[] newBeta = LinearAlgebra.WLS(XA, y, w);
+                double[] newBeta;
+                if (alpha == 0.0)
+                    newBeta = LinearAlgebra.WLS(XA, y, w);
+                else
+                    newBeta = LinearAlgebra.RegularizedWLS(XA, y, w, alpha);
 
                 // Convergence check
                 double diff = LinearAlgebra.VectorNormDiff(beta, newBeta);
@@ -51,7 +76,7 @@ namespace RobustFit.Core.Models
         }
 
         public void Fit(double[] X1D, double[] y, ILossFunction loss,
-                        int maxIter = 50, double tol = 1e-6)
+                        double alpha = 0.0, int maxIter = 50, double tol = 1e-6)
         {
             if (X1D == null) throw new ArgumentNullException(nameof(X1D));
             if (y == null) throw new ArgumentNullException(nameof(y));
@@ -59,7 +84,7 @@ namespace RobustFit.Core.Models
 
             // Wrap 1D into 2D array
             double[][] X2D = Array.ConvertAll(X1D, v => new double[] { v });
-            Fit(X2D, y, loss, maxIter, tol);
+            Fit(X2D, y, loss, alpha, maxIter, tol);
         }
 
         public double Predict(double[] x)
