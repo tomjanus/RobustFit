@@ -20,5 +20,9 @@ namespace RobustFit.Core.LossFunctions
         double Psi(double r);    // influence function (derivative of rho(r))
         double Weight(double r); // weight used in IRLS (psi(r)/r)
         double Loss(double r);   // loss function rho(r)
+        /// <summary>
+        /// Gets the tuning constant used by the loss function.
+        /// </summary>
+        double TuningConstant { get; }
     }
 }

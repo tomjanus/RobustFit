@@ -1,4 +1,3 @@
-
 /// <summary>
 /// Represents the Tukey loss function, also known as bisquare loss.
 /// This loss function gives less weight to large residuals.
@@ -19,6 +18,8 @@
 ///    If residual is small → weight = <c>(1 - (r/c)^2)^2</c> (full influence for very small residuals, decreasing to 0 as |r| approaches c). 
 ///    If residual is large → weight = 0 (no influence)
 /// </remarks>
+
+using System;
 
 namespace RobustFit.Core.LossFunctions
 {
@@ -45,6 +46,8 @@ namespace RobustFit.Core.LossFunctions
             this.c = c;
             c2 = c * c;
         }
+
+        public double TuningConstant => c;
 
         /// <summary>
         /// Computes the psi function (derivative of the loss function) for a given residual.
@@ -76,6 +79,16 @@ namespace RobustFit.Core.LossFunctions
                 return t * t;
             }
             return 0.0;
+        }
+
+        public double WeightAlt(double r)
+        {
+            double w;
+            if (Math.Abs(r) <= 1.0)
+                w = Math.Pow(1.0 - r * r, 2);
+            else
+                w = 0.0;
+            return w;
         }
 
         /// <summary>

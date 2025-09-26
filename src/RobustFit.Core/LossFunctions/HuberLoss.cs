@@ -38,31 +38,47 @@ namespace RobustFit.Core.LossFunctions
     public class HuberLoss : ILossFunction
     {
         private readonly double c;
+
+        /// <summary>
+        /// Huber loss function
+        /// </summary>
+        /// <param name="c">Threshold where the loss switches from quadratic to linear.
+        /// Default is 1.345 (95% efficiency at the normal distribution)</param>
         public HuberLoss(double c = 1.345)
         {
+            if (c <= 0)
+                throw new ArgumentException("The value of c (epsilon) must be positive", nameof(c));
+            
             this.c = c;
         }
 
-        public double Psi(double r) =>
-            Abs(r) <= c ? r : c * Math.Sign(r); // if residual is small use it, otherwise use c with the sign of r
-
-        public double Weight(double r)
-        {
-            double absr = Abs(r);
-            if (absr <= c) return 1.0;
-            if (absr == 0.0) return 1.0; // Handle zero residual case
-            return c / absr; // if residual is small weight = 1, otherwise weight = c / |r|
-        }
+        public double TuningConstant => c;
 
         public double Loss(double r)
         {
-            double absr = Abs(r);
-            return absr <= c ? 0.5 * r * r : c * absr - 0.5 * c * c; // Huber loss function
+            double absR = Math.Abs(r);
+            if (absR <= c)
+                return 0.5 * r * r;
+            else
+                return c * (absR - 0.5 * c);
         }
 
-        /// <summary>
-        /// Helper method for absolute value of a residual.
-        /// </summary>
-        private static double Abs(double r) => Math.Abs(r);
+        public double Weight(double r)
+        {
+            double absR = Math.Abs(r);
+            if (absR <= c)
+                return 1.0;
+            else
+                return c / absR;
+        }
+
+        public double Psi(double r)
+        {
+            double absR = Math.Abs(r);
+            if (absR <= c)
+                return r;
+            else
+                return c * Math.Sign(r);
+        }
     }
 }
