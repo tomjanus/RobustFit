@@ -14,7 +14,9 @@ namespace RobustFit.Demo
             );
 
             AnsiConsole.Write(
-                new Rule("[yellow]Library Demo[/]").RuleStyle("grey").Centered()
+                new Rule("[yellow]Original Equation: y = [bold]2.0[/] + [bold]3.0[/] * (Feature 1) + [bold]1.5[/] * (Feature 2) + noise[/]")
+                    .RuleStyle("grey")
+                    .Centered()
             );
 
             // Generate sample data with outliers
@@ -35,8 +37,8 @@ namespace RobustFit.Demo
 
             // Demo OLS Regressor
             AnsiConsole.Write(new Rule("[green]1. Ordinary Least Squares (OLS)[/]").RuleStyle("grey"));
-            
-              // Fit OLS model
+
+            // Fit OLS model
             var ols = new OLSRegressor();
             ols.Fit(X, y);
             
