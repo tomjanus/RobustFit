@@ -41,6 +41,11 @@ The demo application will generate sample data with outliers and demonstrate the
 - Features: 2  
 - Samples: 200  
 
+**Equation used to generate data:**  
+`y = 2.0 + 3.0 * (Feature 1() + 1.5 * (Feature 2) + noise`  
+Where `Feature 1` and `Feature 2` are two predictor variables (features) and `noise` is an additive
+noise term drawn from a continuous uniform distribution on the interval [-0.25, +0.25].
+
 ---
 
 ### 1. Ordinary Least Squares (OLS)
