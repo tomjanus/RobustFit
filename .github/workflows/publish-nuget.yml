@@ -24,18 +24,17 @@ jobs:
         run: dotnet build --configuration Release --no-restore
 
       - name: Set package version from tag
-        # extracts the tag name (refs/tags/v1.2.3 -> v1.2.3 -> 1.2.3)
         run: |
-          echo "GIT_TAG=${GITHUB_REF#refs/tags/}" >> $GITHUB_ENV
-          # remove leading 'v' if present
-          echo "PACKAGE_VERSION=${GIT_TAG#v}" >> $GITHUB_ENV
+          TAG_NAME="${{ github.ref_name }}"
+          echo "GIT_TAG=$TAG_NAME" >> $GITHUB_ENV
+          echo "PACKAGE_VERSION=${TAG_NAME#v}" >> $GITHUB_ENV
 
       - name: Pack
         run: |
           dotnet pack src/RobustFit.Core/RobustFit.Core.csproj \
             --configuration Release \
             --output ./artifacts \
-            /p:PackageVersion=${{ env.PACKAGE_VERSION }} \
+            /p:PackageVersion=${PACKAGE_VERSION} \
             --no-build
 
       - name: Publish to nuget.org
