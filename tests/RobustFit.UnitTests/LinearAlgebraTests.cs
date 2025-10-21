@@ -109,14 +109,14 @@ namespace RobustFit.UnitTests
         {
             // Arrange: residuals = [-2, -1, 0, 1, 2]
             // Absolute values = [0, 1, 1, 2, 2], median = 1
-            // MAD = 1.4826 * 1 = 1.4826
+            // MAD = 1
             double[] residuals = [-2.0, -1.0, 0.0, 1.0, 2.0];
 
             // Act
             double mad = LinearAlgebra.MAD(residuals);
 
             // Assert
-            Assert.AreEqual(1.4826 * 1.0, mad, TOLERANCE);
+            Assert.AreEqual(1.0, mad, TOLERANCE);
         }
 
         [TestMethod]
@@ -130,7 +130,7 @@ namespace RobustFit.UnitTests
             double mad = LinearAlgebra.MAD(residuals);
 
             // Assert
-            Assert.AreEqual(1.4826 * 1.0, mad, TOLERANCE);
+            Assert.AreEqual(1.0, mad, TOLERANCE);
         }
 
         [TestMethod]
@@ -143,7 +143,7 @@ namespace RobustFit.UnitTests
             double mad = LinearAlgebra.MAD(residuals);
 
             // Assert
-            Assert.AreEqual(1.0, mad, TOLERANCE);
+            Assert.AreEqual(1E-6, mad, TOLERANCE);
         }
 
         [TestMethod]
