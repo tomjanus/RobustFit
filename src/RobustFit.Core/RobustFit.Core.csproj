@@ -25,7 +25,11 @@
 
     <!-- NuGet metadata -->
     <PackageId>RobustFit.Core</PackageId>
-    <Version>1.0.1</Version> <!-- Can be overriden by CI -->
+    <!-- Version can be overridden by CI with -p:Version=x.y.z -->
+    <Version>1.0.1</Version>
+    <!-- Use semantic versioning with CI build numbers -->
+    <VersionPrefix Condition="'$(Version)' == ''">1.0.1</VersionPrefix>
+    <VersionSuffix Condition="'$(Configuration)' == 'Debug' AND '$(VersionSuffix)' == ''">dev</VersionSuffix>
     <Authors>Tomasz Janus</Authors>
     <Company>University of Manchester</Company>
     <Description>A lightweight .NET library for robust regression analysis, designed to provide reliable estimates in the presence of outliers and anomalies in datasets.</Description>
