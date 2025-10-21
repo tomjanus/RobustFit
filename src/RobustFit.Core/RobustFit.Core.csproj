@@ -1,32 +1,66 @@
 <Project Sdk="Microsoft.NET.Sdk">
+
   <PropertyGroup>
-    <TargetFramework>net8.0</TargetFramework>
+    <!-- Multi-targeting - Added .NET Framework support -->
+    <TargetFrameworks>net8.0;net7.0;net6.0;net48;net472</TargetFrameworks>
 
-    <!-- Build/pack settings -->
-    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    <!-- Packaging settings -->
+    <IsPackable>true</IsPackable>
+    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <IncludeBuildOutput>true</IncludeBuildOutput>
+    <IncludeSymbols>true</IncludeSymbols>
+    <IncludeSource>true</IncludeSource>
+    <EmbedAllSources>true</EmbedAllSources>
+    <SymbolPackageFormat>snupkg</SymbolPackageFormat>
+
+    <!-- Build settings -->
+    <ContinuousIntegrationBuild>true</ContinuousIntegrationBuild>
     <Deterministic>true</Deterministic>
+    <DebugType>embedded</DebugType>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+    
+    <!-- Language version for compatibility -->
+    <LangVersion>latest</LangVersion>
+    <Nullable>enable</Nullable>
 
-    <!-- NuGet package metadata (PackageVersion set in CI) -->
+    <!-- NuGet metadata -->
     <PackageId>RobustFit.Core</PackageId>
+    <Version>1.0.1</Version> <!-- Can be overriden by CI -->
     <Authors>Tomasz Janus</Authors>
     <Company>University of Manchester</Company>
     <Description>A lightweight .NET library for robust regression analysis, designed to provide reliable estimates in the presence of outliers and anomalies in datasets.</Description>
     <PackageTags>statistics;outliers;regression;robust-regression;data-science;modeling;machine-learning</PackageTags>
     <RepositoryUrl>https://github.com/tomjanus/RobustFit</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
+    <PublishRepositoryUrl>true</PublishRepositoryUrl>
     <PackageProjectUrl>https://github.com/tomjanus/RobustFit</PackageProjectUrl>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageIcon>icon.png</PackageIcon>
-    <PackageIconUrl>https://raw.githubusercontent.com/tomjanus/RobustFit/main/src/RobustFit.Core/icon/icon.png</PackageIconUrl>
-    <!-- dotnet pack called in CI; do not auto-publish on local build -->
-    <GeneratePackageOnBuild>false</GeneratePackageOnBuild>
+    <EmbedUntrackedSources>true</EmbedUntrackedSources>
+    <PackageReleaseNotes>Added .NET Framework 4.8 and 4.7.2 support for broader compatibility.</PackageReleaseNotes>
   </PropertyGroup>
 
+  <!-- Framework-specific settings -->
+  <PropertyGroup Condition="'$(TargetFramework)' == 'net472' OR '$(TargetFramework)' == 'net48'">
+    <DebugType>portable</DebugType>
+  </PropertyGroup>
+
+  <!-- Content files to include in the package -->
   <ItemGroup>
-    <None Include="README.md" Pack="true" PackagePath="\" />
-    <None Include="LICENSE" Pack="true" PackagePath="\" />
-    <None Include="icon\icon.png" Pack="true" PackagePath="\"/>
+    <Content Include="README.md" Pack="true" PackagePath="" />
+    <Content Include="LICENSE" Pack="true" PackagePath="" />
+    <Content Include="icon\icon.png" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <!-- Package dependencies -->
+  <ItemGroup>
+    <PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All"/>
+  </ItemGroup>
+
+  <!-- Framework-specific dependencies if needed -->
+  <ItemGroup Condition="'$(TargetFramework)' == 'net472' OR '$(TargetFramework)' == 'net48'">
+    <!-- Add any .NET Framework specific dependencies here if needed -->
   </ItemGroup>
 
 </Project>
